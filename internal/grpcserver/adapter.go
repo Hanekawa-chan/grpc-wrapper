@@ -8,6 +8,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"net"
+	"net/http"
 	"rusprofwrapper/internal/domain"
 	"rusprofwrapper/protocol/services"
 	"time"
@@ -42,7 +43,7 @@ func (a *adapter) ListenAndServe() error {
 	}
 
 	go func() {
-		log.Log().Msg("public server started on " + a.config.Address)
+		log.Log().Msg("public grpc server started on " + a.config.Address)
 		if err := a.server.Serve(lis); err != nil {
 			log.Error().Err(err).Msg("listen server")
 			errChan <- err
@@ -54,10 +55,15 @@ func (a *adapter) ListenAndServe() error {
 		ctx := context.Background()
 		mux := runtime.NewServeMux()
 		opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-		err := services.RegisterWrapperServiceHandlerFromEndpoint(ctx, mux, a.config.HttpAddress, opts)
+		err := services.RegisterWrapperServiceHandlerFromEndpoint(ctx, mux, a.config.Address, opts)
 		if err != nil {
 			log.Error().Err(err).Msg("can't register http handler")
 			errChan <- err
+		}
+
+		log.Log().Msg("public http server started on " + a.config.HttpAddress)
+		if err := http.ListenAndServe(a.config.HttpAddress, mux); err != nil {
+			panic(err)
 		}
 	}()
 

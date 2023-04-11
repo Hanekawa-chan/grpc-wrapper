@@ -84,16 +84,14 @@
         "name": {
           "type": "string"
         },
-        "ceoName": {
+        "owner": {
           "type": "string"
         },
         "inn": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "kpp": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         }
       }
     },

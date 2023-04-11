@@ -11,9 +11,9 @@ func (a *adapter) Search(ctx context.Context, request *services.SearchRequest) (
 		return nil, err
 	}
 	return &services.Company{
-		Name:    company.Name,
-		CeoName: company.CeoName,
-		Inn:     company.Inn,
-		Kpp:     company.Kpp,
+		Name:  company.Name,
+		Owner: company.CeoName,
+		Inn:   company.Inn,
+		Kpp:   company.Kpp,
 	}, nil
 }

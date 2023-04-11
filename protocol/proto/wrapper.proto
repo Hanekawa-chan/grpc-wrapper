@@ -20,7 +20,7 @@ message SearchRequest {
 
 message Company {
   string name = 1;
-  string ceo_name = 2;
-  int32 inn = 3;
-  int32 kpp = 4;
+  string owner = 2;
+  string inn = 3;
+  string kpp = 4;
 }
