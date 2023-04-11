@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  wrapper:
+    build:
+      context: .
+    container_name: wrapper
+    ports:
+      - "6080:6080"
+      - "8080:8080"
+    restart: always
+    environment:
+      WRAPPER_CRAWLER_URL: "https://www.rusprofile.ru"
+      WRAPPER_GRPC_ADDRESS: ":6080"
+      WRAPPER_HTTP_ADDRESS: ":8080"
+    expose:
+      - "6080"
+      - "8080"

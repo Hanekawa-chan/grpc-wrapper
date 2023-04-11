@@ -1,0 +1,26 @@
+syntax = "proto3";
+package wrapper;
+
+option go_package = "../services";
+
+import "google/api/annotations.proto";
+
+service WrapperService {
+  rpc Search(SearchRequest) returns (Company) {
+    option (google.api.http) = {
+      post: "/search"
+      body: "*"
+    };
+  }
+}
+
+message SearchRequest {
+  string query = 1;
+}
+
+message Company {
+  string name = 1;
+  string ceo_name = 2;
+  int32 inn = 3;
+  int32 kpp = 4;
+}
